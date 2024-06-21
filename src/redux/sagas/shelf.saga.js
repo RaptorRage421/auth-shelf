@@ -6,6 +6,7 @@ function* shelfSaga() {
     yield takeLatest('FETCH_SHELF_ITEMS', fetchShelfItems)
     yield takeLatest('ADD_SHELF_ITEM', addShelfItem)
     yield takeLatest('DELETE_SHELF_ITEM', deleteShelfItem)
+    yield takeLatest('UPDATE_SHELF_ITEM', updateShelfItem)
   }
 
 function* fetchShelfItems() {
@@ -37,6 +38,14 @@ function* addShelfItem(action) {
     }
   }
 
+  function* updateShelfItem(action) {
+    try {
+      yield axios.put(`/api/shelf/${action.payload.id}`, action.payload);
+      yield put({ type: 'FETCH_SHELF_ITEMS' });
+    } catch (error) {
+      console.error('Error updating shelf item:', error);
+    }
+  }
 
 
   export default shelfSaga
