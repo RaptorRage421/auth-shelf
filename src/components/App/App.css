@@ -110,3 +110,13 @@ input {
   margin: 5px;
   margin-bottom: 10px;
 }
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+}
+.flex {
+  display: flex;
+
+}

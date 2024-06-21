@@ -5,7 +5,7 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
 /**
  * Get all of the items on the shelf
  */
-router.get('/', rejectUnauthenticated, (req, res) => {
+router.get('/', (req, res) => {
   const queryText = 'SELECT * FROM item';
   pool.query(queryText)
     .then(result => res.status(200).json(result.rows))
@@ -52,7 +52,7 @@ router.delete('/:id', rejectUnauthenticated, (req, res) => {
   pool.query(queryText, [itemId, userId])
     .then(result => {
       if (result.rowCount === 0) {
-        res.status(418).send('NO DELETING FOR YOU');
+        res.status(418).send({message: 'NO DELETING FOR YOU'});
       } else {
         res.status(200).json(result.rows[0]);
       }
@@ -90,7 +90,7 @@ router.put('/:id', (req, res) => {
      
       if (result.rowCount === 0) {
    
-        res.status(403).send({ message: 'You are not authorized to update this item.' });
+        res.sendStatus(403).send({ message: 'You are not authorized to update this item.' });
       } else {
        
         res.send(result.rows[0]);

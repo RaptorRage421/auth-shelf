@@ -13,7 +13,9 @@ function ShelfEditForm({ item, toggleEdit }) {
   };
 
   return (
+    
     <form onSubmit={updateItem}>
+        <div className='container'>
       <input 
         value={description} 
         placeholder="Description" 
@@ -25,7 +27,9 @@ function ShelfEditForm({ item, toggleEdit }) {
         onChange={(event) => setImageUrl(event.target.value)} 
       />
       <button type="submit">Update</button>
+      </div>
     </form>
+    
   );
 }
 

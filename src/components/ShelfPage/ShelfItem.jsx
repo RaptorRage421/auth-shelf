@@ -17,8 +17,10 @@ const ShelfItem = ({ item }) => {
     setIsEditing(!isEditing);
   };
 
+
+  
   return (
-    <div>
+    <div className='container'>
       {isEditing ? (
         <ShelfEditForm item={item} toggleEdit={toggleEdit} />
       ) : (
