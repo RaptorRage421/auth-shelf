@@ -68,7 +68,38 @@ router.delete('/:id', rejectUnauthenticated, (req, res) => {
  * Update an item if it's something the logged in user added
  */
 router.put('/:id', (req, res) => {
-  // endpoint functionality
+  // endpoint functionality 
+  const itemId = req.params.id;
+  const userId = req.user.id;
+  const { description, image_url } = req.body;
+  console.log("Update Request:", {
+    itemId,
+    userId,
+    description,
+    image_url
+  });
+  
+  const queryText = `
+    UPDATE "item"
+    SET "description" = $1, "image_url" = $2
+    WHERE "id" = $3 AND "user_id" = $4
+  `;
+
+  pool.query(queryText, [description, image_url, itemId, userId])
+    .then((result) => {
+     
+      if (result.rowCount === 0) {
+   
+        res.status(403).send({ message: 'You are not authorized to update this item.' });
+      } else {
+       
+        res.send(result.rows[0]);
+      }
+    })
+    .catch((err) => {
+      console.error('Error updating item', err);
+      res.status(500).send({ message: 'An error occurred while updating the item.' });
+    });
 });
 
 /**
