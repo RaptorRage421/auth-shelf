@@ -8,9 +8,11 @@ const ShelfList = () => {
   return (
     <div>
       <h2>Shelf</h2>
+      <div className='flex'>
       {shelfItems.map(item => (
         <ShelfItem key={item.id} item={item} />
       ))}
+      </div>
     </div>
   );
 }
